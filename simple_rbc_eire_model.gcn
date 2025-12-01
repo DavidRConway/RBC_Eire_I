@@ -1,0 +1,105 @@
+
+
+
+
+
+block CONSUMER
+{
+  definitions
+  {
+    u[] = (C[]^(1 - sigma) - 1)/(1 - sigma) - phi*(L_s[]^(1 + eta))/(1 + eta);
+  };
+  controls
+  {
+    K_s[], C[], L_s[], I[];
+  };
+  objective
+  {
+    U[] = u[] + beta*E[][U[1]];
+  };
+  constraints
+  {
+    I[] + C[] = r[]*K_s[-1] + W[]*L_s[] + pi[] : lambda_c [ ];
+    K_s[] = (1 - delta)*K_s[-1] + I[];
+  };
+  calibration
+  {
+    beta = 0.99;
+    sigma = 0.2;
+    eta = 1;
+    phi = 0.15;
+    delta = 0.025;
+  };
+};
+
+
+block FIRM
+{
+  controls
+  {
+    Y[], K_d[], L_d[], pi[];
+  };
+  objective
+  {
+    PI[] = pi[];
+  };
+  constraints
+  {
+    Y[] = A[] * K_d[]^alpha * L_d[]^(1 - alpha);
+    Y[] - r[]*K_d[] - W[]*L_d[] = pi[];
+  };
+  calibration
+  {
+    alpha = 0.33;
+  };
+};
+
+
+block EQUILIBRIUM
+{
+  identities
+  {
+    L_d[] = L_s[];
+    K_d[] = K_s[-1];
+  };
+};
+
+
+block EXOG
+{
+  identities
+  {
+    A[] = exp(rho*log(A[-1]) + epsilon_A[]);
+  };
+  shocks
+  {
+    epsilon_A[];
+  };
+  calibration
+  {
+    rho = 0.979;
+  };
+};
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
