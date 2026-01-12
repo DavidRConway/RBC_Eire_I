@@ -1,0 +1,150 @@
+block REPRESENTATIVE_HOUSEHOLD
+{
+  definitions
+  {
+    u[] = ((c[] - psi*(L_s[]^mu)*s[])^(1 - sigma) - 1)/(1 - sigma);
+    beta_tilde = beta*(1 + gamma)^(1 - sigma);
+  };
+  controls
+  {
+    c[], c_D[], c_m[], s[], L_s[], k_Ds[], i_D[], b[];
+  };
+  objective
+  {
+    U[] = u[] + beta_tilde*E[][U[1]];
+  };
+  constraints
+  {
+    c[] = (theta*c_D[]^((eta - 1)/eta) + (1 - theta)*c_m[]^((eta - 1)/eta))^(eta/(eta - 1));
+    s[] = (c[]^xi)*(s[-1]^(1 - xi));
+    c_D[] + p_m[]*c_m[] + i_D[] + b[] = ((1 + r_B[-1])*b[-1])/(1 + gamma) + (1 - tau_L[])*w[]*L_s[] + r_D[]*k_Ds[-1];
+    (1 + gamma)*k_Ds[] = i_D[] + (1 - delta_D)*k_Ds[-1];
+  };
+  calibration
+  {
+    delta_D = 0.025;
+    beta = 0.99;
+    sigma = 2;
+    eta = 1.5;
+    theta = 0.75;
+    xi = 0.1;
+    psi = 1;
+    mu = 1.5;
+    gamma = 0.005;
+  };
+};
+
+block DOMESTIC_SECTOR
+{
+  controls
+  {
+    k_Dd[], L_Dd[], y_D[], pi_D[];
+  };
+  objective
+  {
+    PI_D[] = pi_D[];
+  };
+  constraints
+  {
+    y_D[] = (k_Dd[]^alpha)*(Z_D[]*L_Dd[])^(1 - alpha);
+    pi_D[] = y_D[] - L_Dd[]*w[] - r_D[]*k_Dd[];
+  };
+  calibration
+  {
+    alpha = 0.33;
+  };
+};
+
+block MULTINATIONAL_SECTOR
+{
+  identities
+  {
+    y_M[] = (k_M[-1]^nu)*(zeta_M*Z_M[]*L_M[])^(1 - nu);
+    r_M[] = nu*((p_X[]*y_M[])/k_M[-1]);
+    (1 + gamma)*k_M[] = i_M[] + (1 - delta_M)*k_M[-1];
+  };
+  calibration
+  {
+    nu = 0.30;
+    zeta_M = 1;
+    delta_M = 0.03;
+  };
+};
+
+block GOVERNMENT
+{
+  identities
+  {
+    g[] + ((1 + r_world[-1])*d[-1])/(1 + gamma) = tau_L[]*w[]*L_s[] + tau_M_bar*r_M[]*k_M[-1] + d[];
+    tau_L[] = tau_L_bar + phi_D*((d[-1]/y_GNI_star[-1]) - d_bar_star) + phi_y*y_hat_star[-1];
+    y_hat_star[] = log(y_GNI_star[]) - log(y_GNI_star_bar);
+  };
+  calibration
+  {
+    tau_L_bar = 0.193;
+    tau_M_bar = 0.125;
+    phi_D = 0.05;
+    phi_y = 0.1;
+    y_GNI_star[ss] = y_GNI_star_bar -> y_GNI_star_bar;
+    d[ss] / y_GNI_star[ss] = d_bar_star -> d_bar_star;
+  };
+};
+
+block EQUILIBRIUM
+{
+  identities
+  {
+    y_GDP[] = y_D[] + p_X[]*y_M[];
+    y_GNI_star[] = y_GDP[] + (r_B[-1]*b[-1])/(1 + gamma) - (r_world[-1]*d[-1])/(1 + gamma) - (1 - tau_M_bar)*r_M[]*k_M[-1];
+    adj_cost[] = (phi_L/2) * (L_M[] - L_M[-1])^2;
+    y_D[] = c_D[] + i_D[] + g[] + adj_cost[];
+    k_Dd[] = k_Ds[-1];
+    L_s[] = L_Dd[] + L_M[];
+    r_B[] = r_world[] + phi_B*(exp(b_bar - b[]) - 1);
+  };
+  calibration
+  {
+    phi_B = 0.5;
+    phi_L = 5;
+    b_bar = 0;
+  };
+};
+
+block EXOGENOUS_SHOCKS
+{
+  identities
+  {
+    i_M[] = zeta_IM*Z_IM[];
+    g[] = zeta_G*Z_G[];
+    log(Z_IM[]) = rho_IM*log(Z_IM[-1]) + epsilon_IM[];
+    log(Z_D[]) = rho_D*log(Z_D[-1]) + epsilon_D[];
+    log(Z_M[]) = rho_M*log(Z_M[-1]) + epsilon_M[];
+    log(Z_G[]) = rho_G*log(Z_G[-1]) + epsilon_G[];
+    log(p_m[]) = rho_m*log(p_m[-1]) + epsilon_m[];
+    log(p_X[]) = rho_X*log(p_X[-1]) + epsilon_X[];
+    log(1 + r_world[]) = (1 - rho_r_world)*log(1 + r_bar_world) + rho_r_world*log(1 + r_world[-1]) + epsilon_r_world[];
+  };
+  shocks
+  {
+    epsilon_IM[],
+    epsilon_D[],
+    epsilon_M[],
+    epsilon_G[],
+    epsilon_m[],
+    epsilon_X[],
+    epsilon_r_world[];
+  };
+  calibration
+  {
+    zeta_IM = 0.15;
+    zeta_G = 0.2;
+    rho_IM = 0.9;
+    rho_D = 0.9;
+    rho_M = 0.9;
+    rho_G = 0.9;
+    rho_m = 0.85;
+    rho_X = 0.85;
+    rho_r_world = 0.9;
+    r_bar_world = 0.0202;
+  };
+};

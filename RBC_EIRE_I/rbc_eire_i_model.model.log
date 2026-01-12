@@ -1,0 +1,188 @@
+Generated on 2026-01-10 02:02:15 by gEcon ver. 1.2.3 (2025-04-13)
+http://gecon.r-forge.r-project.org/
+
+Model name: rbc_eire_i_model
+
+1 ERROR, see bottom of this logfile
+
+
+Block: REPRESENTATIVE_HOUSEHOLD
+ Definitions:
+    u[] = (-1 + (c[] - psi * s[] * L_s[]^mu)^(1 - sigma)) * (1 - sigma)^-1
+    beta_tilde = beta * (1 + gamma)^(1 - sigma)
+ Controls:
+    c[], c_D[], c_m[], s[], L_s[], k_Ds[], i_D[], b[]
+ Objective:
+    U[] = (-1 + (c[] - psi * s[] * L_s[]^mu)^(1 - sigma)) * (1 - sigma)^-1 + beta * (1 + gamma)^(1 - sigma) * E[][U[1]]
+ Constraints:
+    -c[] + (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(eta * (-1 + eta)^-1) = 0    (lambda__REPRESENTATIVE_HOUSEHOLD_1[])
+    -s[] + s[-1]^(1 - xi) * c[]^xi = 0    (lambda__REPRESENTATIVE_HOUSEHOLD_2[])
+    -b[] - c_D[] - i_D[] + k_Ds[-1] * r_D[] - c_m[] * p_m[] + b[-1] * (1 + gamma)^-1 * (1 + r_B[-1]) + w[] * L_s[] * (1 - tau_L[]) = 0    (lambda__REPRESENTATIVE_HOUSEHOLD_3[])
+    i_D[] + k_Ds[-1] * (1 - delta_D) - k_Ds[] * (1 + gamma) = 0    (lambda__REPRESENTATIVE_HOUSEHOLD_4[])
+ First order conditions:
+    -lambda__REPRESENTATIVE_HOUSEHOLD_1[] + xi * lambda__REPRESENTATIVE_HOUSEHOLD_2[] * s[-1]^(1 - xi) * c[]^(-1 + xi) + (c[] - psi * s[] * L_s[]^mu)^(-sigma) = 0    (c[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + theta * lambda__REPRESENTATIVE_HOUSEHOLD_1[] * c_D[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0    (c_D[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] * p_m[] + lambda__REPRESENTATIVE_HOUSEHOLD_1[] * (1 - theta) * c_m[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0    (c_m[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_2[] - psi * L_s[]^mu * (c[] - psi * s[] * L_s[]^mu)^(-sigma) + beta * (1 - xi) * s[]^(-xi) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_2[1] * c[1]^xi] = 0    (s[])
+    lambda__REPRESENTATIVE_HOUSEHOLD_3[] * w[] * (1 - tau_L[]) - mu * psi * s[] * L_s[]^(-1 + mu) * (c[] - psi * s[] * L_s[]^mu)^(-sigma) = 0    (L_s[])
+    lambda__REPRESENTATIVE_HOUSEHOLD_4[] * (-1 - gamma) + beta * ((1 - delta_D) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_4[1]] + E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1] * r_D[1]]) * (1 + gamma)^(1 - sigma) = 0    (k_Ds[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + lambda__REPRESENTATIVE_HOUSEHOLD_4[] = 0    (i_D[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + beta * (1 + gamma)^-1 * (1 + r_B[]) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1]] = 0    (b[])
+ First order conditions after reduction:
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + theta * (xi * lambda__REPRESENTATIVE_HOUSEHOLD_2[] * s[-1]^(1 - xi) * c[]^(-1 + xi) + (c[] - psi * s[] * L_s[]^mu)^(-sigma)) * c_D[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0    (c_D[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] * p_m[] + (1 - theta) * (xi * lambda__REPRESENTATIVE_HOUSEHOLD_2[] * s[-1]^(1 - xi) * c[]^(-1 + xi) + (c[] - psi * s[] * L_s[]^mu)^(-sigma)) * c_m[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0    (c_m[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_2[] - psi * L_s[]^mu * (c[] - psi * s[] * L_s[]^mu)^(-sigma) + beta * (1 - xi) * s[]^(-xi) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_2[1] * c[1]^xi] = 0    (s[])
+    lambda__REPRESENTATIVE_HOUSEHOLD_3[] * w[] * (1 - tau_L[]) - mu * psi * s[] * L_s[]^(-1 + mu) * (c[] - psi * s[] * L_s[]^mu)^(-sigma) = 0    (L_s[])
+    lambda__REPRESENTATIVE_HOUSEHOLD_4[] * (-1 - gamma) + beta * ((1 - delta_D) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_4[1]] + E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1] * r_D[1]]) * (1 + gamma)^(1 - sigma) = 0    (k_Ds[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + lambda__REPRESENTATIVE_HOUSEHOLD_4[] = 0    (i_D[])
+    -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + beta * (1 + gamma)^-1 * (1 + r_B[]) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1]] = 0    (b[])
+
+Block: DOMESTIC_SECTOR
+ Controls:
+    k_Dd[], L_Dd[], y_D[], pi_D[]
+ Objective:
+    PI_D[] = pi_D[]
+ Constraints:
+    -y_D[] + k_Dd[]^alpha * (L_Dd[] * Z_D[])^(1 - alpha) = 0    (lambda__DOMESTIC_SECTOR_1[])
+    -pi_D[] + y_D[] - k_Dd[] * r_D[] - w[] * L_Dd[] = 0    (lambda__DOMESTIC_SECTOR_2[])
+ First order conditions:
+    -lambda__DOMESTIC_SECTOR_2[] * r_D[] + alpha * lambda__DOMESTIC_SECTOR_1[] * k_Dd[]^(-1 + alpha) * (L_Dd[] * Z_D[])^(1 - alpha) = 0    (k_Dd[])
+    -lambda__DOMESTIC_SECTOR_2[] * w[] + lambda__DOMESTIC_SECTOR_1[] * Z_D[] * (1 - alpha) * k_Dd[]^alpha * (L_Dd[] * Z_D[])^(-alpha) = 0    (L_Dd[])
+    -lambda__DOMESTIC_SECTOR_1[] + lambda__DOMESTIC_SECTOR_2[] = 0    (y_D[])
+    1 - lambda__DOMESTIC_SECTOR_2[] = 0    (pi_D[])
+ First order conditions after reduction:
+    -r_D[] + alpha * k_Dd[]^(-1 + alpha) * (L_Dd[] * Z_D[])^(1 - alpha) = 0    (k_Dd[])
+    -w[] + Z_D[] * (1 - alpha) * k_Dd[]^alpha * (L_Dd[] * Z_D[])^(-alpha) = 0    (L_Dd[])
+
+Block: MULTINATIONAL_SECTOR
+ Identities:
+    -y_M[] + k_M[-1]^nu * (zeta_M * L_M[] * Z_M[])^(1 - nu) = 0
+    -r_M[] + nu * k_M[-1]^-1 * p_X[] * y_M[] = 0
+    i_M[] + k_M[-1] * (1 - delta_M) - k_M[] * (1 + gamma) = 0
+
+Block: GOVERNMENT
+ Identities:
+    d[] - g[] + tau_M_bar * k_M[-1] * r_M[] - d[-1] * (1 + gamma)^-1 * (1 + r_world[-1]) + tau_L[] * w[] * L_s[] = 0
+    tau_L_bar - tau_L[] + phi_D * (-d_bar_star + d[-1] * y_GNI_star[-1]^-1) + phi_y * y_hat_star[-1] = 0
+    -y_hat_star[] - log(y_GNI_star_bar) + log(y_GNI_star[]) = 0
+
+Block: EQUILIBRIUM
+ Identities:
+    y_D[] - y_GDP[] + p_X[] * y_M[] = 0
+    -y_GNI_star[] + y_GDP[] + b[-1] * r_B[-1] * (1 + gamma)^-1 - d[-1] * r_world[-1] * (1 + gamma)^-1 - k_M[-1] * r_M[] * (1 - tau_M_bar) = 0
+    -adj_cost[] + 0.5 * phi_L * (-L_M[-1] + L_M[])^2 = 0
+    adj_cost[] + c_D[] + g[] + i_D[] - y_D[] = 0
+    k_Ds[-1] - k_Dd[] = 0
+    -L_s[] + L_Dd[] + L_M[] = 0
+    -r_B[] + r_world[] + phi_B * (-1 + exp(b_bar - b[])) = 0
+    -w[] * (1 + omega) + p_X[] * y_M[] * L_M[]^-1 * (1 - nu) = 0
+
+Block: EXOGENOUS_SHOCKS
+ Identities:
+    -i_M[] + zeta_IM * Z_IM[] = 0
+    -g[] + zeta_G * Z_G[] = 0
+    epsilon_IM[] - log(Z_IM[]) + rho_IM * log(Z_IM[-1]) = 0
+    epsilon_D[] - log(Z_D[]) + rho_D * log(Z_D[-1]) = 0
+    epsilon_M[] - log(Z_M[]) + rho_M * log(Z_M[-1]) = 0
+    epsilon_G[] - log(Z_G[]) + rho_G * log(Z_G[-1]) = 0
+    epsilon_m[] - log(p_m[]) + rho_m * log(p_m[-1]) = 0
+    epsilon_X[] - log(p_X[]) + rho_X * log(p_X[-1]) = 0
+    epsilon_r_world[] - log(1 + r_world[]) + rho_r_world * log(1 + r_world[-1]) + log(1 + r_bar_world) * (1 - rho_r_world) = 0
+
+Variables (39):
+    adj_cost[], b[], c[], c_D[], c_m[], d[], g[], i_D[], i_M[], k_Ds[], k_Dd[], k_M[], lambda__REPRESENTATIVE_HOUSEHOLD_2[], lambda__REPRESENTATIVE_HOUSEHOLD_3[], lambda__REPRESENTATIVE_HOUSEHOLD_4[], p_m[], p_X[], pi_D[], r_B[], r_D[], r_M[], r_world[], s[], tau_L[], w[], y_D[], y_M[], y_GNI_star[], y_hat_star[], y_GDP[], L_s[], L_Dd[], L_M[], PI_D[], U[], Z_D[], Z_M[], Z_IM[], Z_G[]
+
+Shocks (7):
+    epsilon_IM[], epsilon_D[], epsilon_M[], epsilon_G[], epsilon_m[], epsilon_X[], epsilon_r_world[]
+
+Parameters (33):
+    alpha, b_bar, beta, d_bar_star, delta_D, delta_M, eta, gamma, mu, nu, omega, phi_D, phi_y, phi_L, phi_B, psi, r_bar_world, rho_IM, rho_D, rho_M, rho_G, rho_m, rho_X, rho_r_world, sigma, tau_M_bar, tau_L_bar, theta, xi, y_GNI_star_bar, zeta_M, zeta_IM, zeta_G
+
+Free parameters (31):
+    alpha, b_bar, beta, delta_D, delta_M, eta, gamma, mu, nu, omega, phi_D, phi_y, phi_L, phi_B, psi, r_bar_world, rho_IM, rho_D, rho_M, rho_G, rho_m, rho_X, rho_r_world, sigma, tau_M_bar, tau_L_bar, theta, xi, zeta_M, zeta_IM, zeta_G
+
+Calibrated parameters (2):
+    d_bar_star, y_GNI_star_bar
+
+Equations (40):
+ (1)  k_Ds[-1] - k_Dd[] = 0
+ (2)  -adj_cost[] + 0.5 * phi_L * (-L_M[-1] + L_M[])^2 = 0
+ (3)  -c[] + (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(eta * (-1 + eta)^-1) = 0
+ (4)  -g[] + zeta_G * Z_G[] = 0
+ (5)  -i_M[] + zeta_IM * Z_IM[] = 0
+ (6)  -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + lambda__REPRESENTATIVE_HOUSEHOLD_4[] = 0
+ (7)  -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + theta * (xi * lambda__REPRESENTATIVE_HOUSEHOLD_2[] * s[-1]^(1 - xi) * c[]^(-1 + xi) + (c[] - psi * s[] * L_s[]^mu)^(-sigma)) * c_D[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0
+ (8)  -lambda__REPRESENTATIVE_HOUSEHOLD_3[] + beta * (1 + gamma)^-1 * (1 + r_B[]) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1]] = 0
+ (9)  -pi_D[] + PI_D[] = 0
+ (10)  -r_D[] + alpha * k_Dd[]^(-1 + alpha) * (L_Dd[] * Z_D[])^(1 - alpha) = 0
+ (11)  -r_M[] + nu * k_M[-1]^-1 * p_X[] * y_M[] = 0
+ (12)  -s[] + s[-1]^(1 - xi) * c[]^xi = 0
+ (13)  -w[] + Z_D[] * (1 - alpha) * k_Dd[]^alpha * (L_Dd[] * Z_D[])^(-alpha) = 0
+ (14)  -y_D[] + k_Dd[]^alpha * (L_Dd[] * Z_D[])^(1 - alpha) = 0
+ (15)  -y_M[] + k_M[-1]^nu * (zeta_M * L_M[] * Z_M[])^(1 - nu) = 0
+ (16)  -lambda__REPRESENTATIVE_HOUSEHOLD_3[] * p_m[] + (1 - theta) * (xi * lambda__REPRESENTATIVE_HOUSEHOLD_2[] * s[-1]^(1 - xi) * c[]^(-1 + xi) + (c[] - psi * s[] * L_s[]^mu)^(-sigma)) * c_m[]^(-1 + eta^-1 * (-1 + eta)) * (theta * c_D[]^(eta^-1 * (-1 + eta)) + (1 - theta) * c_m[]^(eta^-1 * (-1 + eta)))^(-1 + eta * (-1 + eta)^-1) = 0
+ (17)  lambda__REPRESENTATIVE_HOUSEHOLD_4[] * (-1 - gamma) + beta * ((1 - delta_D) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_4[1]] + E[][lambda__REPRESENTATIVE_HOUSEHOLD_3[1] * r_D[1]]) * (1 + gamma)^(1 - sigma) = 0
+ (18)  -w[] * (1 + omega) + p_X[] * y_M[] * L_M[]^-1 * (1 - nu) = 0
+ (19)  lambda__REPRESENTATIVE_HOUSEHOLD_3[] * w[] * (1 - tau_L[]) - mu * psi * s[] * L_s[]^(-1 + mu) * (c[] - psi * s[] * L_s[]^mu)^(-sigma) = 0
+ (20)  epsilon_IM[] - log(Z_IM[]) + rho_IM * log(Z_IM[-1]) = 0
+ (21)  epsilon_D[] - log(Z_D[]) + rho_D * log(Z_D[-1]) = 0
+ (22)  epsilon_M[] - log(Z_M[]) + rho_M * log(Z_M[-1]) = 0
+ (23)  epsilon_G[] - log(Z_G[]) + rho_G * log(Z_G[-1]) = 0
+ (24)  epsilon_m[] - log(p_m[]) + rho_m * log(p_m[-1]) = 0
+ (25)  epsilon_X[] - log(p_X[]) + rho_X * log(p_X[-1]) = 0
+ (26)  i_D[] + k_Ds[-1] * (1 - delta_D) - k_Ds[] * (1 + gamma) = 0
+ (27)  i_M[] + k_M[-1] * (1 - delta_M) - k_M[] * (1 + gamma) = 0
+ (28)  -lambda__REPRESENTATIVE_HOUSEHOLD_2[] - psi * L_s[]^mu * (c[] - psi * s[] * L_s[]^mu)^(-sigma) + beta * (1 - xi) * s[]^(-xi) * (1 + gamma)^(1 - sigma) * E[][lambda__REPRESENTATIVE_HOUSEHOLD_2[1] * c[1]^xi] = 0
+ (29)  -r_B[] + r_world[] + phi_B * (-1 + exp(b_bar - b[])) = 0
+ (30)  y_D[] - y_GDP[] + p_X[] * y_M[] = 0
+ (31)  -y_hat_star[] - log(y_GNI_star_bar) + log(y_GNI_star[]) = 0
+ (32)  -L_s[] + L_Dd[] + L_M[] = 0
+ (33)  U[] - (-1 + (c[] - psi * s[] * L_s[]^mu)^(1 - sigma)) * (1 - sigma)^-1 - beta * (1 + gamma)^(1 - sigma) * E[][U[1]] = 0
+ (34)  tau_L_bar - tau_L[] + phi_D * (-d_bar_star + d[-1] * y_GNI_star[-1]^-1) + phi_y * y_hat_star[-1] = 0
+ (35)  epsilon_r_world[] - log(1 + r_world[]) + rho_r_world * log(1 + r_world[-1]) + log(1 + r_bar_world) * (1 - rho_r_world) = 0
+ (36)  -pi_D[] + y_D[] - k_Dd[] * r_D[] - w[] * L_Dd[] = 0
+ (37)  adj_cost[] + c_D[] + g[] + i_D[] - y_D[] = 0
+ (38)  d[] - g[] + tau_M_bar * k_M[-1] * r_M[] - d[-1] * (1 + gamma)^-1 * (1 + r_world[-1]) + tau_L[] * w[] * L_s[] = 0
+ (39)  -y_GNI_star[] + y_GDP[] + b[-1] * r_B[-1] * (1 + gamma)^-1 - d[-1] * r_world[-1] * (1 + gamma)^-1 - k_M[-1] * r_M[] * (1 - tau_M_bar) = 0
+ (40)  -b[] - c_D[] - i_D[] + k_Ds[-1] * r_D[] - c_m[] * p_m[] + b[-1] * (1 + gamma)^-1 * (1 + r_B[-1]) + w[] * L_s[] * (1 - tau_L[]) = 0
+
+Calibrating equations (2):
+ (1)  -d_bar_star + d[ss] * y_GNI_star[ss]^-1 = 0
+ (2)  -y_GNI_star_bar + y_GNI_star[ss] = 0
+
+Parameter settings (31):
+ (1)  alpha = 0.33
+ (2)  b_bar = 0
+ (3)  beta = 0.99
+ (4)  delta_D = 0.025
+ (5)  delta_M = 0.03
+ (6)  eta = 1.5
+ (7)  gamma = 0.005
+ (8)  mu = 1.5
+ (9)  nu = 0.3
+ (10)  omega = 0.2
+ (11)  phi_D = 0.05
+ (12)  phi_y = 0.1
+ (13)  phi_L = 5
+ (14)  phi_B = 0.5
+ (15)  psi = 1
+ (16)  r_bar_world = 0.0202
+ (17)  rho_IM = 0.9
+ (18)  rho_D = 0.9
+ (19)  rho_M = 0.9
+ (20)  rho_G = 0.9
+ (21)  rho_m = 0.85
+ (22)  rho_X = 0.85
+ (23)  rho_r_world = 0.9
+ (24)  sigma = 2
+ (25)  tau_M_bar = 0.125
+ (26)  tau_L_bar = 0.193
+ (27)  theta = 0.75
+ (28)  xi = 0.1
+ (29)  zeta_M = 1
+ (30)  zeta_IM = 0.15
+ (31)  zeta_G = 0.2
+
+
+1 ERROR
+(gEcon model error 1): There are only 39 variables but there are 40 model equations
